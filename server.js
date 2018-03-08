@@ -34,7 +34,7 @@ var server = http.createServer(function(request, response){
       '<head><link rel="stylesheet" href="/style.css">' +
       '</head><body>'  +
       '<h1>你好</h1>' +
-      '<p>这里是你访问到的内容，字体的颜色为你</p>'+
+      '<p>这里是你访问到的内容，字体的颜色为你访问到的css添加</p>'+
       '<script src="/main.js"></script>' +
       '</body></html>')
     response.end()
