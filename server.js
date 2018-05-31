@@ -33,8 +33,22 @@ var server = http.createServer(function(request, response){
 
   /******** 从这里开始看，上面不要看 ************/
   console.log('HTTP 路径为\n' + path);
+  if(path === '/ajax'){
+      response.setHeader('Content-Type', 'text/json; charset=utf-8');
+      response.setHeader('Access-Control-Allow-Origin','*');
+      response.statusCode = 200;
+      response.write(`
+      {
+          "黄洪涛":{
+            "age": "18",
+            "sex": "男"
+          }
+      }
+      `);
+      response.end();
+  }
     /******************************JSONP  学习代码*******************************************************/
-    if(path === '/hht'){
+    else if(path === '/hht'){
         response.setHeader('Content-Type', 'text/javascript; charset=utf-8');
         response.statusCode = 200;
         response.write(`${query.callback}.call(undefined,'success')`);
@@ -42,23 +56,22 @@ var server = http.createServer(function(request, response){
     }
     /***************第一次node server程序*****************************/
     else if(path === '/style.css'){
+      let string = fs.readFileSync('./style.css', 'utf8')
     response.setHeader('Content-Type', 'text/css; charset=utf-8');
-    response.write('body{background-color: #ddd;}h1{color: red;}p{color: green;}');
+    response.write(string);
     response.end()
   }else if(path === '/main.js'){
-    response.setHeader('Content-Type', 'text/javascript; charset=utf-8');
-    response.write('alert("这是JS执行的")');
-    response.end()
+      let string = fs.readFileSync('./main.js', 'utf8')
+      response.statusCode = 200
+      response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
+      response.write(string)
+      response.end()
   }else if(path === '/'){
-    response.setHeader('Content-Type', 'text/html; charset=utf-8');
-    response.write('<!DOCTYPE>\n<html>'  + 
-      '<head><link rel="stylesheet" href="/style.css">' +
-      '</head><body>'  +
-      '<h1>你好</h1>' +
-      '<p>这里是你访问到的内容，字体的颜色为你访问到的css添加</p>'+
-      '<script src="/main.js"></script>' +
-      '</body></html>');
-    response.end()
+      let string = fs.readFileSync('./index.html', 'utf8')
+      response.statusCode = 200
+      response.setHeader('Content-Type', 'text/html;charset=utf-8')
+      response.write(string)
+      response.end()
   }
   else{
     response.statusCode = 404;

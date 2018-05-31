@@ -14,27 +14,44 @@
 </style>
 <body>
     <button id="button">向jack发送请求</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script src="./main.js"></script>
     <script>
-        $(button).on('click',function(){
-            $.ajax({
-                url: "http://127.0.0.1:8002/hht",
-
-                // The name of the callback parameter, as specified by the YQL service
-                jsonp: "callback",
-
-                // Tell jQuery we're expecting JSONP
-                dataType: "jsonp",
-
-                // Work with the response
-                success: function( response ) {
-                    if(response === 'success'){
-                        alert('我拿到jack的数据啦');
-                    } // server response
+        /*$('#button').on('click',()=>{
+            var ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = ()=>{
+                if(ajax.readyState === 4){
+                    if(ajax.status >= 200 && ajax.status <300){
+                        let string = ajax.responseText;
+                        console.log(string);
+                    }
+                    else if(ajax.status >= 400){
+                        alert("请求失败呜呜~");
+                    }
                 }
-            });
-        })
-        
+            }
+            ajax.open('GET','http://localhost:8001/ajax');
+            ajax.send();
+        })*/
+        // $('#button').on('click',function(){
+        //     $.ajax({
+        //         url: "http://127.0.0.1:8002/hht",
+        //
+        //         // The name of the callback parameter, as specified by the YQL service
+        //         jsonp: "callback",
+        //
+        //         // Tell jQuery we're expecting JSONP
+        //         dataType: "jsonp",
+        //
+        //         // Work with the response
+        //         success: function( response ) {
+        //             if(response === 'success'){
+        //                 alert('我拿到jack的数据啦');
+        //             } // server response
+        //         }
+        //     });
+        // })
+
         /*button.addEventListener('click',function (){
             var functionname = 'hht' + parseInt(Math.random()*100000,10);
             window[functionname] = function (jackdata){
