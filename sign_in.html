@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .form-wrapper {
+            border: 1px solid #ddd;
+            min-width: 350px;
+            padding: 20px;
+        }
+
+        .form-wrapper .row {
+            margin: 10px 0;
+        }
+
+        .form-wrapper .row > label > .lab {
+            display: inline-block;
+            min-width: 5em;
+        }
+
+        .form-wrapper .row > label > .error {
+            display: inline-block;
+            color: red;
+            margin-left: 1em;
+        }
+    </style>
+</head>
+<body>
+<div class="form-wrapper">
+    <h1>登陆</h1>
+    <form class="myform" id="myform">
+        <div class="row">
+            <label>
+                <span class="lab">邮箱</span>
+                <input type="text" name="email">
+                <span class="error"></span>
+            </label>
+        </div>
+        <div class="row">
+            <label>
+                <span class="lab">密码</span>
+                <input type="password" name="password">
+                <span class="error"></span>
+            </label>
+        </div>
+        <input type="submit">
+    </form>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    let $myForm = $('#myform');
+    $myForm.on('submit', (e) => {
+        e.preventDefault();
+        let hash = {};
+        let error = false;
+        let need = ['email', 'password'];
+        need.forEach((name) => {
+            let value = $myForm.find(`[name=${name}]`).val()
+            hash[name] = value
+        })
+        $myForm.find('.error').each((index, span) => {
+            $(span).text('');
+        })
+
+        if (hash['email'].indexOf('@') === -1) {
+            $myForm.find('[name = "email"]').siblings('.error')
+                .text('邮箱格式不正确');
+            error = true;
+        }
+        if (hash['email'] === '') {
+            $myForm.find('[name = "email"]').siblings('.error')
+                .text('请输入邮箱');
+            error = true;
+        }
+        if (hash['password'] === '') {
+            $myForm.find('[name = "password"]').siblings('.error')
+                .text('请输入密码');
+            error = true;
+        }
+        if (error) return;
+
+        $.post('/sign_in', hash).then((res) => {
+            window.location.href = '/'
+        }, (req) => {
+            alert("邮箱与密码不匹配")
+        })
+    })
+</script>
+</body>
+</html>
